@@ -112,6 +112,11 @@ return [
                 'view' => 'View User',
             ],
         ],
+
+        'web_status' => [
+            'title' => 'Web Status Management',
+            'web_list' => 'Web List'
+        ]
     ],
 
     'frontend' => [

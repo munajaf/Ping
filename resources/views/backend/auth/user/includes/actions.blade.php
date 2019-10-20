@@ -23,7 +23,9 @@
                 @lang('labels.general.more')
             </button>
             <div class="dropdown-menu" aria-labelledby="userActions">
-                @if ($user->id !== auth()->id())
+            <a href="{{ route('admin.webstatus.index', $user) }}" class="dropdown-item">@lang('buttons.backend.access.users.web_list')</a>
+
+            @if ($user->id !== auth()->id())
                     <a href="{{ route('admin.auth.user.clear-session', $user) }}"
                        data-trans-button-cancel="@lang('buttons.general.cancel')"
                        data-trans-button-confirm="@lang('buttons.general.continue')"

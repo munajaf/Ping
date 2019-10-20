@@ -16,6 +16,7 @@ return [
         'access' => [
             'users' => [
                 'activate' => 'Activate',
+                'web_list' => 'Monitored List',
                 'change_password' => 'Change Password',
                 'clear_session' => 'Clear Session',
                 'confirm' => 'Confirm',
