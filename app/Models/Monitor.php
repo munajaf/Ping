@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Spatie\Url\Url;
-use App\Models\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -28,9 +28,29 @@ class Monitor extends Model
         'certificate_check_enabled' => 'boolean',
     ];
 
-    public function userMonitors()
+    public static function getList()
     {
-        return $this->belongsToMany(User::class, 'user_monitors')->withTimestamps();
+        $monitors = Monitor::where('user_id', auth()->user()->id)->get()->map(function ($monitor) {
+            $monitor->uptime_status = ($monitor->uptime_status == "up") ? 1 : (($monitor->uptime_status == "down") ? 0 : 2);
+            $monitor->online_since = ($monitor->uptime_status !== 2) ? Carbon::parse($monitor->uptime_status_last_change_date)->diffForHumans() : "Pending";
+            $monitor->link = ($monitor->uptime_check_enabled) ?
+                "<a href=".route('frontend.user.monitor.disable', $monitor->id).">Disable</a>" :
+                "<a href=".route('frontend.user.monitor.enable', $monitor->id).">Enable</a>";
+            return $monitor;
+        });
+        return $monitors;
+    }
+
+    public static function createMonitor($url)
+    {
+        Monitor::create([
+            'user_id' => auth()->user()->id,
+            'url' => trim($url, '/'),
+            'look_for_string' => $lookForString ?? '',
+            'uptime_check_method' => isset($lookForString) ? 'get' : 'head',
+            'certificate_check_enabled' => false,
+            'uptime_check_interval_in_minutes' => config('uptime-monitor.uptime_check.run_interval_in_minutes'),
+        ]);
     }
 
     public function enable()

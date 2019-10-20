@@ -45,23 +45,22 @@
                         <table  class="table table-dark">
                             <thead>
                                 <tr>
-                                    <td>#</td>
-                                    <td class="col">Url</td>
-{{--                                    <td class="col">Online Since</td>--}}
-                                    <td class="col-2">Status</td>
-                                    <td colspan="3" class="col-2 text-center">Action</td>
+                                    <td>UP Status</td>
+                                    <td>Url</td>
+                                    <td class="col">Online Since</td>
+                                    <td class="col">Status</td>
+                                    <td class="col text-center">Action</td>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($monitors as $monitor)
                             <tr>
-                                <td>{{$monitor->id}}</td>
+                                <td>{{($monitor->uptime_status)}}</td>
                                 <td><a href="{{ $monitor->url }}">{{ $monitor->url }}</a></td>
-                                <td></td>
+                                <td>{{$monitor->online_since}}</td>
                                 <td>{{($monitor->uptime_check_enabled) ? "Enabled":"Disabled"}}</td>
                                 <td><a href="{{route('frontend.user.monitor.destroy', $monitor->id)}}">Delete</a></td>
-                                <td><a href="{{route('frontend.user.monitor.enable', $monitor->id)}}">Enable</a></td>
-                                <td><a href="{{route('frontend.user.monitor.disable', $monitor->id)}}">Disable</a></td>
+                                <td>{!! $monitor->link !!}</td>
                             </tr>
                             @endforeach
                             </tbody>

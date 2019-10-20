@@ -17,8 +17,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $monitors = Monitor::with('userMonitors')->get();
-
+        $monitors = Monitor::getList();
         return view('frontend.user.dashboard', compact('monitors'));
     }
 
@@ -29,15 +28,8 @@ class DashboardController extends Controller
         if (! in_array($url->getScheme(), ['http', 'https'])) {
             $url = $url->withScheme('http');
         }
-        $monitor = Monitor::create([
-            'url' => trim($url, '/'),
-            'look_for_string' => $lookForString ?? '',
-            'uptime_check_method' => isset($lookForString) ? 'get' : 'head',
-            'certificate_check_enabled' => false,
-            'uptime_check_interval_in_minutes' => config('uptime-monitor.uptime_check.run_interval_in_minutes'),
-        ]);
 
-        $monitor->userMonitors()->attach(\Auth::id());
+        Monitor::createMonitor($url);
 
         return redirect()->route('frontend.user.dashboard')->withFlashSuccess($url . ' Will be monitored!');
     }
