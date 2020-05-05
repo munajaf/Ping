@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
+use Illuminate\Validation\Rule;
 
 /**
  * Class RegisterRequest.
@@ -32,7 +31,7 @@ class RegisterRequest extends FormRequest
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
             'email' => ['required', 'string', 'email', Rule::unique('users')],
-            'password' => ['required','string','min:8','confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
             'g-recaptcha-response' => ['required_if:captcha_status,true', 'captcha'],
         ];
     }

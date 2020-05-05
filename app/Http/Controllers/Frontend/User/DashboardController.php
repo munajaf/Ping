@@ -18,12 +18,12 @@ class DashboardController extends Controller
     public function index()
     {
         $monitors = Monitor::getList();
+
         return view('frontend.user.dashboard', compact('monitors'));
     }
 
     public function store(CreateMonitorRequest $request)
     {
-
         $url = Url::fromString($request->url);
         if (! in_array($url->getScheme(), ['http', 'https'])) {
             $url = $url->withScheme('http');
@@ -31,27 +31,27 @@ class DashboardController extends Controller
 
         Monitor::createMonitor($url);
 
-        return redirect()->route('frontend.user.dashboard')->withFlashSuccess($url . ' Will be monitored!');
+        return redirect()->route('frontend.user.dashboard')->withFlashSuccess($url.' Will be monitored!');
     }
 
     public function destroy(Monitor $monitorId)
     {
         $monitorId->deleteRelation();
 
-        return redirect()->route('frontend.user.dashboard')->withFlashSuccess($monitorId->url . ' Deleted');
+        return redirect()->route('frontend.user.dashboard')->withFlashSuccess($monitorId->url.' Deleted');
     }
 
     public function enable(Monitor $monitorId)
     {
         $monitorId->enable();
 
-        return redirect()->route('frontend.user.dashboard')->withFlashSuccdess($monitorId->url . ' Enabled');
+        return redirect()->route('frontend.user.dashboard')->withFlashSuccdess($monitorId->url.' Enabled');
     }
 
     public function disable(Monitor $monitorId)
     {
         $monitorId->disable();
 
-        return redirect()->route('frontend.user.dashboard')->withFlashSuccdess($monitorId->url . ' Disabled');
+        return redirect()->route('frontend.user.dashboard')->withFlashSuccdess($monitorId->url.' Disabled');
     }
 }

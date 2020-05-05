@@ -29,9 +29,8 @@ return [
         ],
 
         'web_status' => [
-            'title' => 'List'
+            'title' => 'List',
         ],
-
 
         'general' => [
             'all_rights_reserved' => 'All Rights Reserved.',
