@@ -115,8 +115,8 @@ return [
 
         'web_status' => [
             'title' => 'Web Status Management',
-            'web_list' => 'Web List'
-        ]
+            'web_list' => 'Web List',
+        ],
     ],
 
     'frontend' => [

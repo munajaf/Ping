@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\User\AccountController;
-use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
+use App\Http\Controllers\Frontend\User\ProfileController;
 
 /*
  * Frontend Controllers
@@ -24,16 +24,13 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         // User Dashboard Specific
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
         Route::group(['as' => 'monitor.'], function () {
             // User Dashboard Specific
             Route::post('store', [DashboardController::class, 'store'])->name('store');
             Route::get('delete/{monitorId}', [DashboardController::class, 'destroy'])->name('destroy');
             Route::get('enable/{monitorId}', [DashboardController::class, 'enable'])->name('enable');
             Route::get('disable/{monitorId}', [DashboardController::class, 'disable'])->name('disable');
-
         });
-
 
         // User Account Specific
         Route::get('account', [AccountController::class, 'index'])->name('account');

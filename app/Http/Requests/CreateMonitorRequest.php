@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateMonitorRequest extends FormRequest
 {
@@ -36,7 +36,7 @@ class CreateMonitorRequest extends FormRequest
     public function getValidatorInstance()
     {
         $this->request->replace(['url' => trim($this->request->get('url'), '/')]);
+
         return parent::getValidatorInstance();
     }
-
 }
